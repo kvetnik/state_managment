@@ -18,13 +18,13 @@ class ProductsNotifier extends StateNotifier<List<ProductData>> {
 
 @injectable
 class CartNotifier extends StateNotifier<List<ProductData>> {
-  CartNotifier(this._productService) : super([]){
-    _initCart();
-  }
-  late final ProductsService _productService;
+  CartNotifier() : super([]);
 
-  // ignore: avoid_void_async
-  void _initCart() async {
-    state = [];
+  void addProduct(ProductData productData) {
+    state.add(productData);
+  }
+
+  void deleteProduct(ProductData productData) {
+    state.remove(productData);
   }
 }

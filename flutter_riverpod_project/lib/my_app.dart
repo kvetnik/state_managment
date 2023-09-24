@@ -26,7 +26,7 @@ class MyHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(productsProvider);
-    final cart = ref.watch(cartProvider);
+    final cart = ref.watch(cartProvider.notifier);
     final isLoaded = ref.watch(productsProvider).isNotEmpty;
 
     if (!isLoaded) {
@@ -50,7 +50,7 @@ class MyHomePage extends ConsumerWidget {
                 icon: const Icon(Icons.shopping_cart)),
             Center(
               child: Padding(
-                child: Text(cart.length.toString()),
+                child: Text(cart.state.length.toString()),
                 padding: const EdgeInsets.only(right: 10),
               ),
             )
@@ -61,10 +61,12 @@ class MyHomePage extends ConsumerWidget {
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
               title: Text(products.elementAt(index).name),
-              trailing: cart.contains(products.elementAt(index))
+              trailing: cart.state.contains(products.elementAt(index))
+              // cart.contains(products.elementAt(index))
                   ? IconButton(
                       onPressed: () {
-                        cart.remove(products.elementAt(index));
+                        // cart.remove(products.elementAt(index));
+                        cart.deleteProduct(products.elementAt(index));
                       },
                       icon: const Icon(
                         Icons.add_circle_outline,
@@ -73,7 +75,7 @@ class MyHomePage extends ConsumerWidget {
                     )
                   : IconButton(
                       onPressed: () {
-                        cart.add(products.elementAt(index));
+                        cart.addProduct(products.elementAt(index));
                       },
                       icon: const Icon(Icons.add_circle_outline),
                     ),

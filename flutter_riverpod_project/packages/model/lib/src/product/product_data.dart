@@ -8,4 +8,16 @@ class ProductData with _$ProductData {
     required int id,
     required String name,
   }) = _ProductData;
-}
+
+  }
+
+// class ProductData {
+//   int id;
+//   String name;
+//
+//   const factory ProductData({
+//     required int id,
+//     required String name,
+//   }) = _ProductData;
+//
+// }
