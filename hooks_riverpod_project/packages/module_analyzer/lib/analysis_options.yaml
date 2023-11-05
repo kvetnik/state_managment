@@ -1,0 +1,37 @@
+include: package:pedantic_mono/analysis_options.yaml
+
+analyzer:
+  language:
+    strict-raw-types: true
+  strong-mode:
+    implicit-casts: false
+  errors:
+    todo: ignore
+    missing_return: error
+  plugins:
+    - dart_code_metrics
+
+  exclude:
+    - analysis_options.yaml
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.config.dart"
+
+linter:
+  rules:
+    - cancel_subscriptions
+    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
+    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+
+dart_code_metrics:
+  anti_patterns:
+    - long_method
+  metrics:
+    cyclomatic_complexity: 20
+    lines_of_executable_code: 50
+  metrics-exclude:
+    - test/**
+  rules:
+    - newline-before-return
+    - no-boolean-literal-compare
+
