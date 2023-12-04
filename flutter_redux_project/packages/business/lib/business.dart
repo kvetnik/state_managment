@@ -1,2 +1,2 @@
-export 'src/product_bloc.dart';
+export 'src/app_state.dart';
 export 'src/state_factory.dart';

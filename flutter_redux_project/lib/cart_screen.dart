@@ -1,6 +1,7 @@
 import 'package:business/business.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
 class CartScreen extends StatelessWidget{
 
@@ -8,24 +9,23 @@ class CartScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<ProductsBloc>();
+    final Store<AppState> store = StoreProvider.of<AppState>(context);
 
-    return StreamBuilder<ProductsState>(
-        initialData: bloc.state,
-        stream: bloc.stream,
+    return StoreConnector<AppState, AppState>(
+        converter: (store) => store.state,
         builder: (context, snapshot) {
           return Scaffold(
             appBar: AppBar(
               title: const Text('Cart'),
             ),
             body: ListView.builder(
-              itemCount: snapshot.requireData.cart.length,
+              itemCount: snapshot.cart.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                    title: Text(snapshot.requireData.cart.elementAt(index).name),
+                    title: Text(snapshot.cart.elementAt(index).name),
                     trailing: IconButton(
                       onPressed: () {
-                        bloc.dispatch(RemoveFromCartEvent(product: snapshot.requireData.cart.elementAt(index)));
+                        store.dispatch(RemoveFromCartEvent(snapshot.products.elementAt(index)));
                       },
                       icon: const Icon(Icons.highlight_remove_rounded, color: Colors.red,),
                     )
